@@ -39,33 +39,29 @@ public class QuickSort {
     }
 
     private static int partition(int[] nums, int start, int end){
-        int i = start, j= end + 1;
         int pivot = nums[start];
-        while (true){
-            while (nums[++i] <= pivot){
-                if (i == end){
-                    break;
-                }
+        int i = start;
+        int j = end;
+        while (i < j){
+
+            while (i < j && pivot <= nums[j]){
+                j --;
+            }
+            // 因为这里的条件是pivot >= nums[i], 所以 nums[start] 没有移动，一直就是pivot
+            while (i < j && pivot >= nums[i]){
+                i ++;
             }
 
-            while (nums[--j] >= pivot){
-                if (j == start){
-                    break;
-                }
+            if (i < j){
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
             }
 
-            if (i >= j){
-                break;
-            }
-
-            int temp = nums[i];
-            nums[i] = nums[j];
-            nums[j] = temp;
         }
 
-        nums[start] = nums[j];
-        nums[j] = pivot;
-
-        return j;
+        nums[start] = nums[i];
+        nums[i] = pivot;
+        return i;
     }
 }
